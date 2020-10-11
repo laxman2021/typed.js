@@ -5,62 +5,62 @@
 /**
 *		Implementation of hook_menu.
 **/
-function nia_map_menu(){
-
-	$items = array();
-	
-	$items['admin/settings/nia_map'] = array(
-		'title' => 'Nia Map settings',
-		'description' => 'Configuration optinos for nia_maps',
-		'page callback' => 'niamap_admin_settings',
-		'access callback' => 'user_access',
-		'access arguments' => array('administer site configuration'),
-	);
-	
-	$items['nia_menu'] = array(
-	'title' => "Nia Address",
-	'page callback' => "nia_create_address", // after visit drupal6/nia_menu, nia_create_address() function is called
-	'access callback' => true, // must return true, otherwise it will not visible as menu item
-	'type' => MENU_NORMAL_ITEM, // drupal's default menu type
-	'weight' => '10', // we want to display nia_menu link below in our nav menu
-	);
-	
-	$items['nia_search'] = array(
-	'title' => "Nia Search",
-	'page callback' => "nia_search_address",
-	'menu callback' => true,
-	'access callback' => true,
-	//'type' => MENU_NORMAL_ITEM, 
-	//'weight' => '10',
-	);
-	// $items['myusers'] = array(
-	// 'page callback' => 'myusers',
-	// 'title'=>'chennaiah',
-	 // 'menu callback' => true,
-	// );
-	
-	return $items;
+function nia_map_menu()
+{
+    $items = array();
+    
+    $items['admin/settings/nia_map'] = array(
+        'title' => 'Nia Map settings',
+        'description' => 'Configuration optinos for nia_maps',
+        'page callback' => 'niamap_admin_settings',
+        'access callback' => 'user_access',
+        'access arguments' => array('administer site configuration'),
+    );
+    
+    $items['nia_menu'] = array(
+    'title' => "Nia Address",
+    'page callback' => "nia_create_address", // after visit drupal6/nia_menu, nia_create_address() function is called
+    'access callback' => true, // must return true, otherwise it will not visible as menu item
+    'type' => MENU_NORMAL_ITEM, // drupal's default menu type
+    'weight' => '10', // we want to display nia_menu link below in our nav menu
+    );
+    
+    $items['nia_search'] = array(
+    'title' => "Nia Search",
+    'page callback' => "nia_search_address",
+    'menu callback' => true,
+    'access callback' => true,
+    //'type' => MENU_NORMAL_ITEM,
+    //'weight' => '10',
+    );
+    // $items['myusers'] = array(
+    // 'page callback' => 'myusers',
+    // 'title'=>'chennaiah',
+    // 'menu callback' => true,
+    // );
+    
+    return $items;
 }
 
 
 /**
  * Implemenatation of hook_theme
  */
-function nia_map_theme() {
-	return  array(
-		'test' => array(
-		  'template' => 'test',
-		  'arguments' => array('output' => NULL),
-		)
-	);
-
+function nia_map_theme()
+{
+    return  array(
+        'test' => array(
+          'template' => 'test',
+          'arguments' => array('output' => null),
+        )
+    );
 }
 /**
 *	Page callback function for nia_map_menu.
 **/
 function niamap_admin_settings()
 {
-	return 'Hi this is a test for nia Map';
+    return 'Hi this is a test for nia Map';
 }
 
 
@@ -69,76 +69,78 @@ function niamap_admin_settings()
 **/
 function nia_create_address()
 {
-		$output = drupal_get_form('nia_add_form');
+    $output = drupal_get_form('nia_add_form');
 
-		return $output;
+    return $output;
 }
 
 /**
  * form builder; add address form
  */
-function nia_add_form($form_state){
- 
-	drupal_set_title('Add New Address');
-	 
-	$form = array();
-	 
-	$form['name'] = array(
-	'#title' => 'Name',
-	'#type' => 'textfield',
-	'#size' => '30',
-	);
-	 
-	$form['city'] = array(
-	'#title' => 'City',
-	'#type' => 'textfield',
-	'#size' => '30',
-	);
-	
-	$form['address'] = array(
-	'#title' => 'Address',
-	'#type' => 'textfield',
-	'#size' => '30',
-	);
-	 
-	$form['country'] = array(
-	'#title' => 'Country',
-	'#type' => 'textfield',
-	'#size' => '30',
-	);
-	 
-	$form['submit'] = array(
-	'#type' => 'submit',
-	'#value' => 'Submit',
-	);
-	 
-	return $form;
+function nia_add_form($form_state)
+{
+    drupal_set_title('Add New Address');
+     
+    $form = array();
+     
+    $form['name'] = array(
+    '#title' => 'Name',
+    '#type' => 'textfield',
+    '#size' => '30',
+    );
+     
+    $form['city'] = array(
+    '#title' => 'City',
+    '#type' => 'textfield',
+    '#size' => '30',
+    );
+    
+    $form['address'] = array(
+    '#title' => 'Address',
+    '#type' => 'textfield',
+    '#size' => '30',
+    );
+     
+    $form['country'] = array(
+    '#title' => 'Country',
+    '#type' => 'textfield',
+    '#size' => '30',
+    );
+     
+    $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    );
+     
+    return $form;
 }
 
 // helper function to display form data
-	function display_print($data=''){
-	drupal_set_message('<pre>' . print_r($data,true) . '</pre>');
-	}
+    function display_print($data='')
+    {
+        drupal_set_message('<pre>' . print_r($data, true) . '</pre>');
+    }
 
 /**
 * validate function for Nia add form
 * @param $form An associative array containing the structure of the form
 * @param $form_state A keyed array containing the current state of the form
 */
-    function nia_add_form_validate($form,$form_state){
-		// display a sample message that, our form is submitted
-		// drupal_set_message('Address Updated successfully.');
-		// display_print($form_state);
-			
-			$name = $form_state['values']['name'];
-			if (trim($name) == '' || strlen(trim($name)) < 6 ){
-			form_set_error('name','Person Name is either empty or Less than 6 characters.');
-			}
-			
-			$city	 = $form_state['values']['city'];
-			if (trim($city) == ''){
-			form_set_error('name','City is empty.');
-			}
+    function nia_add_form_validate($form, $form_state)
+    {
+        // display a sample message that, our form is submitted
+        // drupal_set_message('Address Updated successfully.');
+        // display_print($form_state);
+            
+        $name = $form_state['values']['name'];
+        if (trim($name) == '' || strlen(trim($name)) < 6) {
+            form_set_error('name', 'Person Name is either empty or Less than 6 characters.');
+        }
+            
+        $city	 = $form_state['values']['city'];
+        if (trim($city) == '') {
+            form_set_error('name', 'City is empty.');
+        }
     }
 
 /**
@@ -147,102 +149,97 @@ function nia_add_form($form_state){
 * @param $form An associative array containing the structure of the form
 * @param $form_state A keyed array containing the current state of the form
 */
-    function nia_add_form_submit($form,$form_state){
-	
-    $name = trim($form_state['values']['name']);
-    $city = trim($form_state['values']['city']);
-	$address = trim($form_state['values']['address']);
-    $country = trim($form_state['values']['country']);	
-	
-	$query = "select id from nia_locations where area LIKE '$city'";
-	$result = db_query($query);	
-	while ($row = db_fetch_array($result)) {		
-		$lat_long_id = $row['id']; 		
-	}
-	
-    $query = "INSERT INTO nia_address (`name`, city, address, country, lat_long_id) VALUES ('$name', '$city', '$address', '$country', '$lat_long_id')";	
-    $result = db_query($query);
-	
-		if ($result !== FALSE){
-			drupal_set_message('Address added successfully.');
-		}
+    function nia_add_form_submit($form, $form_state)
+    {
+        $name = trim($form_state['values']['name']);
+        $city = trim($form_state['values']['city']);
+        $address = trim($form_state['values']['address']);
+        $country = trim($form_state['values']['country']);
+    
+        $query = "select id from nia_locations where area LIKE '$city'";
+        $result = db_query($query);
+        while ($row = db_fetch_array($result)) {
+            $lat_long_id = $row['id'];
+        }
+    
+        $query = "INSERT INTO nia_address (`name`, city, address, country, lat_long_id) VALUES ('$name', '$city', '$address', '$country', '$lat_long_id')";
+        $result = db_query($query);
+    
+        if ($result !== false) {
+            drupal_set_message('Address added successfully.');
+        }
     }
-	
-	
+    
+    
 
 /**
 *	Page callback function for nia_search_address.
 **/
 function nia_search_address()
 {
-		$output = drupal_get_form('nia_search_form');
-		$latitude=123;
-		//	drupal_set_message($longitude);
-		$output .= theme('test');
-       // $output .= drupal_render($form);
-      //  return $output;
-		return $output;
-}	
+    $output = drupal_get_form('nia_search_form');
+    $latitude=123;
+    //	drupal_set_message($longitude);
+    $output .= theme('test');
+    // $output .= drupal_render($form);
+    //  return $output;
+    return $output;
+}
 
 /**
  * form builder; add address form
  */
-function nia_search_form($form_state){
- 
-	drupal_set_title('Search Address');
-	 
-	$form = array();
-	 
-	$form['name'] = array(
-	'#title' => 'Name',
-	'#type' => 'textfield',
-	'#size' => '30',
-	);	
-	 
-	$form['submit'] = array(
-	'#type' => 'submit',
-	'#value' => 'Search',
-	);
-	 
-	return $form;
+function nia_search_form($form_state)
+{
+    drupal_set_title('Search Address');
+     
+    $form = array();
+     
+    $form['name'] = array(
+    '#title' => 'Name',
+    '#type' => 'textfield',
+    '#size' => '30',
+    );
+     
+    $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Search',
+    );
+     
+    return $form;
 }
 
- function nia_search_form_submit($form,$form_state){			
-    $name = trim($form_state['values']['name']);
-			
-		$query = "SELECT nl.latitude, nl.longitude FROM nia_locations nl inner join nia_address na where na.lat_long_id = nl.id and na.name = '$name'";
-		$result = db_query($query);	
-		while ($row = db_fetch_array($result)) {		
-			$latitude = $row['latitude']; 
-			$longitude = $row['longitude'];		
-		}
-		if(isset($latitude))
-		{
-			drupal_goto("nia_search/".$latitude."/".$longitude);
-		}
-		else 
-		{
-			drupal_set_message('Location currently not found.');
-			drupal_goto("nia_search");
-		}
-}
+ function nia_search_form_submit($form, $form_state)
+ {
+     $name = trim($form_state['values']['name']);
+            
+     $query = "SELECT nl.latitude, nl.longitude FROM nia_locations nl inner join nia_address na where na.lat_long_id = nl.id and na.name = '$name'";
+     $result = db_query($query);
+     while ($row = db_fetch_array($result)) {
+         $latitude = $row['latitude'];
+         $longitude = $row['longitude'];
+     }
+     if (isset($latitude)) {
+         drupal_goto("nia_search/".$latitude."/".$longitude);
+     } else {
+         drupal_set_message('Location currently not found.');
+         drupal_goto("nia_search");
+     }
+ }
 
-Test /**
+/**
 * Implements hook_module_implements_alter().
 */
-
-function nia_map_module_implements_alter(&$implementations, $hook) {
-
-	/*
-		if ($hook == 'form_alter') {
-			// Move my_module_form_alter() to the end of the list.
-			// \Drupal::moduleHandler()->getImplementations()
-			// iterates through $implementations with a foreach loop which PHP iterates
-			// in the order that the items were added, so to move an item to the end of
-			// the array, we remove it and then add it.
-			$group = $implementations['my_module'];
-			unset($implementations['my_module']);
-			$implementations['my_module'] = $group;
-		}
-	*/
+function nia_map_implements_alter(&$implementations, $hook)
+{
+    if ($hook == 'form_alter') {
+        // Move my_module_form_alter() to the end of the list.
+        // \Drupal::moduleHandler()->getImplementations()
+        // iterates through $implementations with a foreach loop which PHP iterates
+        // in the order that the items were added, so to move an item to the end of
+        // the array, we remove it and then add it.
+        $group = $implementations['my_module'];
+        unset($implementations['my_module']);
+        $implementations['my_module'] = $group;
+    }
 }
